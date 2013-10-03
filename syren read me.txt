@@ -1,0 +1,18 @@
+// Syren Media Player -Audio Streaming Engine- (ASE) Command Line Demo Tool
+// Deniz H.A, Sept, 2013
+ 
+
+ Syren Media Player (ASE) Tool v1.02b, - Oct 3, 2013")
+ 
+ Usage: Syren(.exe) -file <full pathname to file>, -plist <directory>, -url <url:port>
+
+ Options:
+	   
+  -file audiofile.(-.M4A, -.MP3, -.WMA) -> exp: Syren -file obeobsolete.m4a
+
+  -plist <directory name> -> exp: Syren -plist C:\\myplaylist  
+
+  -stream <url> (WMA streaming stations only) -> exp: Syren -url http://live1.kexp.org:80  
+	 
+  
+ 

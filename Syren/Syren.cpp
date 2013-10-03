@@ -6,18 +6,26 @@
 #include <windows.h>
 #include <stdio.h>
 
-typedef int (*df_playAudioFile)(LPWSTR pathToFile); 
-typedef int (*df_playAudioList)(LPWSTR pathToDirectory); 
+typedef int (*df_openAudioFile)(LPWSTR pathToFile); 
+typedef int (*df_openAudioStream)(LPWSTR url); 
+typedef int (*df_openAudioPlaylist)(LPWSTR pathToDirectory); 
+
+enum {
+	   openFile = 0,
+	   openPlaylist,
+	   openStream
+};
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-   df_playAudioFile playAudioFile;
-   df_playAudioList playAudioList;
+   df_openAudioFile playAudioFile;
+   df_openAudioStream playAudioStream;
+   df_openAudioPlaylist playAudioPlaylist;
    HINSTANCE syrenase;
    LPWSTR *szArgList;
    int nArgs;
    MSG msg;
-   bool playFlag = false;  
+   int playFlag = -1;  
 
    ZeroMemory(&msg, sizeof(msg));
 
@@ -25,37 +33,49 @@ int _tmain(int argc, _TCHAR* argv[])
    if(NULL == szArgList)
    {
       wprintf(L"CommandLineToArgvW failed\n");
-      return 0;
+      return (0);
    }
 
-   if((nArgs > 1) && wcscmp(szArgList[1], L"-plist") == 0) playFlag = true;
-	
-   if(nArgs < 2 || (nArgs==2 && playFlag)) {
-
-	   printf("\nSyren Media Player (ASE) Tool v1.01b, - October 2013");
-	   printf("\nUsage: Syren(.exe) -plist <directory name> or single audiofile.[-.M4A, -.MP3, -.WMA]\n");	   
+   if(nArgs < 3) {
+wrongOption:
+	   printf("\nSyren Media Player (ASE) Tool v1.02b, - Oct 3, 2013");
+	   printf("\nUsage: Syren(.exe) -file <full pathname to file> -plist <directory> -url <url:port>\n");
+	   printf("\nOptions:\n\n");
+	   printf(" -file audiofile.(-.M4A, -.MP3, -.WMA) -> exp: Syren -file bestcoast.mp3\n");
+	   printf(" -plist <directory name> -> exp: Syren -plist C:\\myplaylist\n");	   
+	   printf(" -stream <url> (WMA streaming stations only) -> exp: Syren -url http://live1.kexp.org:80\n"); 	   
 	   return (0);
    }
+
+   if(!wcscmp(szArgList[1], L"-file")) playFlag = openFile;
+   if(!wcscmp(szArgList[1], L"-plist")) playFlag = openPlaylist;
+   if(!wcscmp(szArgList[1], L"-url")) playFlag = openStream;
+
+   if(playFlag == -1) goto wrongOption;
   
    // ** Load SyrenASE.DLL into process 
    syrenase = LoadLibrary((LPCWSTR)L"SyrenASE.dll");
 
    if(!syrenase)
-       printf("*** SyrenASE.DLL, library failed to load ***!\n");
+       printf("*** SyrenASE.DLL was not found, library failed to load ***!\n");
 
    // ** Accessing to real functions via function pointer..
    // ** Now we can play the audio file or playlist with functions residing in SyrenASE.DLL
-   if(!playFlag) {
-       playAudioFile = (df_playAudioFile) GetProcAddress(syrenase,"syrenPlayAudioFile");
-       playAudioFile(szArgList[1]);
+   if(playFlag == openFile) {
+       playAudioFile = (df_openAudioFile) GetProcAddress(syrenase,"syrenOpenAudioFile");
+       playAudioFile(szArgList[2]);
    }
-   else {
-       playAudioList = (df_playAudioList) GetProcAddress(syrenase,"syrenPlayAudioList");
-       playAudioList(szArgList[2]);
+   else if(playFlag == openPlaylist) {
+       playAudioPlaylist = (df_openAudioPlaylist) GetProcAddress(syrenase,"syrenOpenAudioPlaylist");
+       playAudioPlaylist(szArgList[2]);
+   }
+   else if(playFlag == openStream) {
+       playAudioStream = (df_openAudioStream) GetProcAddress(syrenase,"syrenOpenAudioStream");
+       playAudioStream(szArgList[2]);
    }
 
    // thread run Loop 
-   while (GetMessage(&msg, NULL, 0, 0)) {
+   while(GetMessage(&msg, NULL, 0, 0)) {
            
 	   TranslateMessage(&msg);
        DispatchMessage(&msg);

@@ -12,7 +12,7 @@
 
   -plist <directory name> -> exp: Syren -plist C:\\myplaylist  
 
-  -stream <url> (WMA streaming stations only) -> exp: Syren -url http://live1.kexp.org:80  
+  -stream <url> (WMA streaming stations only) -> exp: Syren -stream http://live1.kexp.org:80
 	 
   
  

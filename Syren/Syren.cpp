@@ -43,13 +43,13 @@ wrongOption:
 	   printf("\nOptions:\n\n");
 	   printf(" -file audiofile.(-.M4A, -.MP3, -.WMA) -> exp: Syren -file bestcoast.mp3\n");
 	   printf(" -plist <directory name> -> exp: Syren -plist C:\\myplaylist\n");	   
-	   printf(" -stream <url> (WMA streaming stations only) -> exp: Syren -url http://live1.kexp.org:80\n"); 	   
+	   printf(" -stream <url> (WMA streaming stations only) -> exp: Syren -stream http://live1.kexp.org:80\n"); 	   
 	   return (0);
    }
 
    if(!wcscmp(szArgList[1], L"-file")) playFlag = openFile;
    if(!wcscmp(szArgList[1], L"-plist")) playFlag = openPlaylist;
-   if(!wcscmp(szArgList[1], L"-url")) playFlag = openStream;
+   if(!wcscmp(szArgList[1], L"-stream")) playFlag = openStream;
 
    if(playFlag == -1) goto wrongOption;
   

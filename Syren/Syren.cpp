@@ -38,12 +38,12 @@ int _tmain(int argc, _TCHAR* argv[])
 
    if(nArgs < 3) {
 wrongOption:
-	   printf("\nSyren Media Player (ASE) Tool v1.02b, - Oct 3, 2013");
-	   printf("\nUsage: Syren(.exe) -file <full pathname to file> -plist <directory> -url <url:port>\n");
+	   printf("\nSyren Media Player (ASE) Tool v1.10b, - Oct 3, 2013");
+	   printf("\nUsage: Syren(.exe) -file <full pathname to file> -plist <directory> -stream <url:port>\n");
 	   printf("\nOptions:\n\n");
 	   printf(" -file audiofile.(-.M4A, -.MP3, -.WMA) -> exp: Syren -file bestcoast.mp3\n");
 	   printf(" -plist <directory name> -> exp: Syren -plist C:\\myplaylist\n");	   
-	   printf(" -stream <url> (WMA streaming stations only) -> exp: Syren -stream http://live1.kexp.org:80\n"); 	   
+	   printf(" -stream <url> (AAC, MP3, WMA stations) -> for AAC streaming exp: Syren -stream http://208.77.21.13:19030 \n"); 	   
 	   return (0);
    }
 

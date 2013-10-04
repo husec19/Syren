@@ -2,9 +2,9 @@
 // Deniz H.A, Sept, 2013
  
 
- Syren Media Player (ASE) Tool v1.02b, - Oct 3, 2013")
+ Syren Media Player (ASE) Tool v1.02b, - Oct 3, 2013
  
- Usage: Syren(.exe) -file <full pathname to file>, -plist <directory>, -url <url:port>
+ Usage: Syren(.exe) -file <full pathname to file>, -plist <directory>, -stream <url:port>
 
  Options:
 	   
@@ -12,7 +12,8 @@
 
   -plist <directory name> -> exp: Syren -plist C:\\myplaylist  
 
-  -stream <url> (WMA streaming stations only) -> exp: Syren -stream http://live1.kexp.org:80
+  -stream <url> (AAC, MP3, WMA stations) -> for AAC streaming exp: Syren -stream http://208.77.21.13:19030
 	 
   
- 
+
+* Go to http://208.77.21.13:19030/ on your internet browser to see the server running this 64k AAC stream
